@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur IMC | VS Code</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Open Graph pour le partage -->
+    <meta property="og:title" content="Calculateur IMC Gratuit">
+    <meta property="og:description" content="Calculez votre IMC et poids idéal selon la formule de Lorenz">
+    <meta property="og:image" content="https://img.icons8.com/color/480/body-mass-index.png">
+    <meta name="description" content="Calculateur IMC gratuit avec formule de Lorenz. Interface responsive.">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>Calculateur IMC</h1>
+            </div>
+            <p class="tagline">Santé • Simplicité • Précision</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Section de saisie -->
+            <section class="input-section card">
+                <h2><i class="fas fa-sliders-h"></i> Paramètres</h2>
+                
+                <div class="form-group">
+                    <div class="gender-selector">
+                        <h3><i class="fas fa-venus-mars"></i> Sexe</h3>
+                        <div class="gender-options">
+                            <button class="gender-btn active" data-gender="M">
+                                <i class="fas fa-mars"></i>
+                                <span>Homme</span>
+                            </button>
+                            <button class="gender-btn" data-gender="F">
+                                <i class="fas fa-venus"></i>
+                                <span>Femme</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-with-preview">
+                        <div class="input-header">
+                            <h3><i class="fas fa-ruler-vertical"></i> Taille</h3>
+                            <div class="value-display" id="height-value">170 cm</div>
+                        </div>
+                        <input type="range" id="height" min="120" max="220" value="170" class="slider">
+                        <div class="slider-labels">
+                            <span>120 cm</span>
+                            <span>220 cm</span>
+                        </div>
+                    </div>
+
+                    <div class="input-with-preview">
+                        <div class="input-header">
+                            <h3><i class="fas fa-weight"></i> Poids</h3>
+                            <div class="value-display" id="weight-value">70 kg</div>
+                        </div>
+                        <input type="range" id="weight" min="40" max="150" value="70" class="slider">
+                        <div class="slider-labels">
+                            <span>40 kg</span>
+                            <span>150 kg</span>
+                        </div>
+                    </div>
+
+                    <div class="quick-buttons">
+                        <h3><i class="fas fa-bolt"></i> Préréglages</h3>
+                        <div class="preset-buttons">
+                            <button class="preset-btn" data-height="160" data-weight="55">
+                                <i class="fas fa-female"></i> Femme moyenne
+                            </button>
+                            <button class="preset-btn" data-height="175" data-weight="75">
+                                <i class="fas fa-male"></i> Homme moyen
+                            </button>
+                            <button class="preset-btn" data-height="185" data-weight="85">
+                                <i class="fas fa-user"></i> Grand
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section résultats -->
+            <section class="results-section card">
+                <h2><i class="fas fa-chart-bar"></i> Résultats</h2>
+                
+                <div class="bmi-display">
+                    <div class="bmi-circle">
+                        <div class="bmi-value" id="bmi">24.2</div>
+                        <div class="bmi-label">IMC</div>
+                        <div class="bmi-status" id="bmi-status">Normal</div>
+                    </div>
+                    
+                    <div class="bmi-scale">
+                        <div class="scale-markers">
+                            <span>18.5</span>
+                            <span>25</span>
+                            <span>30</span>
+                        </div>
+                        <div class="scale-bar">
+                            <div class="scale-segment under"></div>
+                            <div class="scale-segment normal"></div>
+                            <div class="scale-segment over"></div>
+                            <div class="scale-segment obese"></div>
+                            <div class="scale-indicator" id="scale-indicator"></div>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Maigreur</span>
+                            <span>Normal</span>
+                            <span>Surpoids</span>
+                            <span>Obésité</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detailed-results">
+                    <div class="result-card">
+                        <i class="fas fa-bullseye"></i>
+                        <h3>Poids idéal</h3>
+                        <div class="result-value" id="ideal-weight">65.0 kg</div>
+                        <div class="result-formula">Formule de Lorenz</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <i class="fas fa-balance-scale"></i>
+                        <h3>Différence</h3>
+                        <div class="result-value" id="weight-diff">+5.0 kg</div>
+                        <div class="result-note" id="diff-note">Au-dessus de l'idéal</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <i class="fas fa-info-circle"></i>
+                        <h3>Votre santé</h3>
+                        <div class="health-tip" id="health-tip">
+                            Votre IMC est dans la norme. Continuez à maintenir une alimentation équilibrée.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn" id="share-btn">
+                        <i class="fas fa-share-alt"></i> Partager
+                    </button>
+                    <button class="action-btn" id="reset-btn">
+                        <i class="fas fa-redo"></i> Réinitialiser
+                    </button>
+                    <button class="action-btn" id="export-btn">
+                        <i class="fas fa-download"></i> Exporter
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Cet outil fournit des informations générales. Consultez un professionnel de santé pour des conseils personnalisés.</p>
+                </div>
+                <div class="credits">
+                    <p>Développé avec <i class="fas fa-heart"></i> dans VS Code | Formule de Lorenz</p>
+                    <div class="version">
+                        <i class="fas fa-code"></i> Version 1.0 | <span id="current-year">2024</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast pour notifications -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
